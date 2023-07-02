@@ -102,16 +102,16 @@ One note before you delve into your tasks: for each endpoint, you are expected t
 
 - Fetches a dictionary of all available categories
 - Request Arguments: None
-- Returns: An object with a 2 key, `categories` and `success`.
+- Returns: An object with a 2 key, `categories` and `success`. `categories` that contains an object of id: category_string key:value pairs.
 
 ```json
 {
   "categories": {
-    "1": "Science", 
-    "2": "Art", 
-    "3": "Geography", 
-    "4": "History", 
-    "5": "Entertainment", 
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
     "6": "Sports"
   }, 
   "success": true
@@ -119,7 +119,236 @@ One note before you delve into your tasks: for each endpoint, you are expected t
 ```
 
 
+`GET '/questions?page=${integer}'`
 
+- Fetches a paginated set of questions, a total number of questions, all categories and current category string.
+- Request Arguments: page - integer
+- Returns: An object with 10 paginated questions, total questions, object including all categories, and current category string
+
+```json
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  }, 
+  "current_category": "",
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    }, 
+    {
+      "answer": "Tom Cruise",
+      "category": 5,
+      "difficulty": 4,
+      "id": 4,
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    }, 
+    {
+      "answer": "Maya Angelou",
+      "category": 4,
+      "difficulty": 2,
+      "id": 5,
+      "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+    }, 
+    {
+      "answer": "Edward Scissorhands",
+      "category": 5,
+      "difficulty": 3,
+      "id": 6,
+      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+    }, 
+    {
+      "answer": "Muhammad Ali",
+      "category": 4,
+      "difficulty": 1,
+      "id": 9,
+      "question": "What boxer's original name is Cassius Clay?"
+    }, 
+    {
+      "answer": "Brazil",
+      "category": 6,
+      "difficulty": 3,
+      "id": 10,
+      "question": "Which is the only team to play in every soccer World Cup tournament?"
+    }, 
+    {
+      "answer": "Uruguay",
+      "category": 6,
+      "difficulty": 4,
+      "id": 11,
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    }, 
+    {
+      "answer": "George Washington Carver",
+      "category": 4,
+      "difficulty": 2,
+      "id": 12,
+      "question": "Who invented Peanut Butter?"
+    }, 
+    {
+      "answer": "Lake Victoria",
+      "category": 3,
+      "difficulty": 2,
+      "id": 13,
+      "question": "What is the largest lake in Africa?"
+    }, 
+    {
+      "answer": "The Palace of Versailles",
+      "category": 3,
+      "difficulty": 3,
+      "id": 14,
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    }
+  ], 
+  "success": true,
+  "total_questions": 19
+}
+```
+
+`DELETE '/questions/${id}'`
+
+- Deletes a specified question using the id of the question
+- Request Arguments: id - integer
+- Returns: Does not need to return anything besides the appropriate HTTP status code. Optionally can return the id of the question. If you are able to modify the frontend, you can have it remove the question using the id instead of refetching the questions.
+
+```json
+{
+  "deleted": "1",
+  "success": true
+}
+
+```
+
+`POST '/questions'`
+
+- Sends a post request in order to add a new question
+- Request Body:
+```json
+{
+  "question": "Heres a new question string",
+  "answer": "Heres a new answer string",
+  "difficulty": 1,
+  "category": 3,
+}
+
+```
+- Returns: Example
+```json
+
+{
+  "created": 20, 
+  "success": true
+}
+
+```
+
+`POST '/questions/search'`
+
+- Sends a post request in order to search for a specific question by search term
+- Request Body:
+```json
+{
+  "searchTerm": "this is the term the user is looking for"
+}
+
+```
+- Returns: any array of questions, a number of totalQuestions that met the search term and the current category string
+```json
+
+{
+  "current_category": "",
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 5,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    }, 
+    {
+      "answer": "Tom Cruise",
+      "category": 5,
+      "difficulty": 4,
+      "id": 4,
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    },
+  ], 
+  "success": true,
+  "total_questions": 2
+}
+
+```
+
+`GET '/categories/${id}/questions'`
+
+- Fetches questions for a cateogry specified by id request argument
+- Request Arguments: id - integer
+- Returns: An object with questions for the specified category, total questions, and current category string
+
+```json
+{
+  "current_category": "Science", 
+  "questions": [
+    {
+      "answer": "The Liver", 
+      "category": 1, 
+      "difficulty": 4, 
+      "id": 20, 
+      "question": "What is the heaviest organ in the human body?"
+    }, 
+    {
+      "answer": "Alexander Fleming", 
+      "category": 1, 
+      "difficulty": 3, 
+      "id": 21, 
+      "question": "Who discovered penicillin?"
+    }, 
+    {
+      "answer": "Blood", 
+      "category": 1, 
+      "difficulty": 4, 
+      "id": 22, 
+      "question": "Hematology is a branch of medicine involving the study of what?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 3
+}
+
+```
+
+`POST '/quizzes'`
+
+- Sends a post request in order to get the next question
+- Request Body:
+```json
+{
+  "previous_questions": [1, 4, 20, 15],
+  "quiz_category": current category
+}
+```
+Returns: a single new question object
+
+```json
+{
+  "question": {
+    "answer": "SonNT2", 
+    "category": 2, 
+    "difficulty": 1, 
+    "id": 20, 
+    "question": "Who create and update this project?"
+  }, 
+  "success": true
+}
+```
 
 
 ## Testing
