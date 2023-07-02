@@ -14,6 +14,8 @@
 pip install -r requirements.txt
 ```
 
+All require package in the `requirements.txt` file will be installed after run
+
 #### Key Pip Dependencies
 
 - [Flask](http://flask.pocoo.org/) is a lightweight backend microservices framework. Flask is required to handle requests and responses.
@@ -38,13 +40,40 @@ psql trivia < trivia.psql
 
 ### Run the Server
 
-From within the `./src` directory first ensure you are working using your created virtual environment.
+From within the `backend` directory first ensure you are working using your created virtual environment.
 
 To run the server, execute:
+
+`Linux/Macos:`
+```bash
+export FLASK_APP=flaskr
+export FLASK_ENV=development
+flask run
+```
+
+`Windows:`
+```bash
+$env:FLASK_APP="flaskr"
+$env:FLASK_ENV="development"
+python -m flask run
+```
+
+Setting ENV (Windowns/Linux/MacOS)
+1. FLASK_APP=flaskr  (setting flask use the `flaskr` directory and the `__init__.py` file to find the application.)
+2. FLASK_ENV=development  (setting flask use development envinronment to detect file changed and restart the server automatically)
+
+
+To reload the server, execute:
 
 ```bash
 flask run --reload
 ```
+or
+
+```bash
+python -m flask run --reload
+```
+
 
 The `--reload` flag will detect file changes and restart the server automatically.
 
@@ -62,33 +91,36 @@ One note before you delve into your tasks: for each endpoint, you are expected t
 3. Create an endpoint to handle `GET` requests for all available categories.
 4. Create an endpoint to `DELETE` a question using a question `ID`.
 5. Create an endpoint to `POST` a new question, which will require the question and answer text, category, and difficulty score.
-6. Create a `POST` endpoint to get questions based on category.
+6. Create a `GET` endpoint to get questions based on category.
 7. Create a `POST` endpoint to get questions based on a search term. It should return any questions for whom the search term is a substring of the question.
 8. Create a `POST` endpoint to get questions to play the quiz. This endpoint should take a category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions.
 9. Create error handlers for all expected errors including 400, 404, 422, and 500.
 
 ## Documenting your Endpoints
 
-You will need to provide detailed documentation of your API endpoints including the URL, request parameters, and the response body. Use the example below as a reference.
+`GET '/categories'`
 
-### Documentation Example
-
-`GET '/api/v1.0/categories'`
-
-- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
+- Fetches a dictionary of all available categories
 - Request Arguments: None
-- Returns: An object with a single key, `categories`, that contains an object of `id: category_string` key: value pairs.
+- Returns: An object with a 2 key, `categories` and `success`.
 
 ```json
 {
-  "1": "Science",
-  "2": "Art",
-  "3": "Geography",
-  "4": "History",
-  "5": "Entertainment",
-  "6": "Sports"
+  "categories": {
+    "1": "Science", 
+    "2": "Art", 
+    "3": "Geography", 
+    "4": "History", 
+    "5": "Entertainment", 
+    "6": "Sports"
+  }, 
+  "success": true
 }
 ```
+
+
+
+
 
 ## Testing
 
